@@ -14,9 +14,7 @@ func main() {
 	})
 
 	sensor := app.Party("/sensor", crs).AllowMethods(iris.MethodOptions)
-	{
-		sensor.Get("/body", handlers.BodyRes)
-	}
+	sensor.Get("/body", handlers.BodyRes)
 
 	app.Run(iris.Addr(":8090"))
 
