@@ -1,3 +1,5 @@
+/*Package sqls 执行数据库的增删改查操作
+ */
 package sqls
 
 import (
