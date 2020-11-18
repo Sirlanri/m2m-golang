@@ -29,14 +29,21 @@ func main() {
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
+
 	var wg sync.WaitGroup
 	wg.Add(1)
-	go func() {
 
+	//接收端
+	go func() {
 		if token := c.Subscribe("testtopic/#", 0, nil); token.Wait() && token.Error() != nil {
 			fmt.Println(token.Error())
 			os.Exit(1)
 		}
+	}()
+	//发送端
+	go func() {
+		token := c.Publish("testtopic/gosend", 0, false, "嗯哼~从go发出的")
+		token.Wait()
 	}()
 	wg.Wait()
 	//time.Sleep(time.Hour)
