@@ -22,17 +22,17 @@ import (
 // [-topic <topic>]             Topic
 // [-store <path>]              Store Directory
 
-func main1() {
-	topic := flag.String("topic", "", "The topic name to/from which to publish/subscribe")
-	broker := flag.String("broker", "tcp://iot.eclipse.org:1883", "The broker URI. ex: tcp://10.10.1.1:1883")
+func main2() {
+	topic := flag.String("topic", "testtopic", "The topic name to/from which to publish/subscribe")
+	broker := flag.String("broker", "tcp://127.0.0.1:1882", "The broker URI. ex: tcp://127.0.0.1:1882")
 	password := flag.String("password", "", "The password (optional)")
 	user := flag.String("user", "", "The User (optional)")
-	id := flag.String("id", "testgoid", "The ClientID (optional)")
+	id := flag.String("id", "emqx_test_client", "The ClientID (optional)")
 	cleansess := flag.Bool("clean", false, "Set Clean Session (default false)")
 	qos := flag.Int("qos", 0, "The Quality of Service 0,1,2 (default 0)")
 	num := flag.Int("num", 1, "The number of messages to publish or subscribe (default 1)")
 	payload := flag.String("message", "", "The message text to publish (default empty)")
-	action := flag.String("action", "", "Action publish or subscribe (required)")
+	action := flag.String("action", "sub", "Action publish or subscribe (required)")
 	store := flag.String("store", ":memory:", "The Store Directory (default use memory store)")
 	flag.Parse()
 
@@ -45,20 +45,20 @@ func main1() {
 		fmt.Println("Invalid setting for -topic, must not be empty")
 		return
 	}
-
-	fmt.Printf("Sample Info:\n")
-	fmt.Printf("\taction:    %s\n", *action)
-	fmt.Printf("\tbroker:    %s\n", *broker)
-	fmt.Printf("\tclientid:  %s\n", *id)
-	fmt.Printf("\tuser:      %s\n", *user)
-	fmt.Printf("\tpassword:  %s\n", *password)
-	fmt.Printf("\ttopic:     %s\n", *topic)
-	fmt.Printf("\tmessage:   %s\n", *payload)
-	fmt.Printf("\tqos:       %d\n", *qos)
-	fmt.Printf("\tcleansess: %v\n", *cleansess)
-	fmt.Printf("\tnum:       %d\n", *num)
-	fmt.Printf("\tstore:     %s\n", *store)
-
+	/*
+		fmt.Printf("Sample Info:\n")
+		fmt.Printf("\taction:    %s\n", *action)
+		fmt.Printf("\tbroker:    %s\n", *broker)
+		fmt.Printf("\tclientid:  %s\n", *id)
+		fmt.Printf("\tuser:      %s\n", *user)
+		fmt.Printf("\tpassword:  %s\n", *password)
+		fmt.Printf("\ttopic:     %s\n", *topic)
+		fmt.Printf("\tmessage:   %s\n", *payload)
+		fmt.Printf("\tqos:       %d\n", *qos)
+		fmt.Printf("\tcleansess: %v\n", *cleansess)
+		fmt.Printf("\tnum:       %d\n", *num)
+		fmt.Printf("\tstore:     %s\n", *store)
+	*/
 	opts := MQTT.NewClientOptions()
 	opts.AddBroker(*broker)
 	opts.SetClientID(*id)
