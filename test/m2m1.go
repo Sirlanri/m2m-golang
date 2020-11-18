@@ -8,25 +8,21 @@ import (
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 )
 
-/*
-Options:
- [-help]                      Display help.
- [-a pub|sub]                 Action pub (publish) or sub (subscribe)
- [-m <message>]               Payload to send
- [-n <number>]                Number of messages to send or receive
- [-q 0|1|2]                   Quality of Service
- [-clean]                     CleanSession (true if -clean is present)
- [-id <clientid>]             CliendID
- [-user <user>]               User
- [-password <password>]       Password
- [-broker <uri>]              Broker URI
- [-topic <topic>]             Topic
- [-store <path>]              Store Directory
+// Options:
+// [-help]                      Display help.
+// [-a pub|sub]                 Action pub (publish) or sub (subscribe)
+// [-m <message>]               Payload to send
+// [-n <number>]                Number of messages to send or receive
+// [-q 0|1|2]                   Quality of Service
+// [-clean]                     CleanSession (true if -clean is present)
+// [-id <clientid>]             CliendID
+// [-user <user>]               User
+// [-password <password>]       Password
+// [-broker <uri>]              Broker URI
+// [-topic <topic>]             Topic
+// [-store <path>]              Store Directory
 
-*/
-
-
-func main() {
+func main1() {
 	topic := flag.String("topic", "", "The topic name to/from which to publish/subscribe")
 	broker := flag.String("broker", "tcp://iot.eclipse.org:1883", "The broker URI. ex: tcp://10.10.1.1:1883")
 	password := flag.String("password", "", "The password (optional)")
