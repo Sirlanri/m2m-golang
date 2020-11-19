@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -15,6 +16,7 @@ var client mqtt.Client
 var deal mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 	fmt.Printf("TOPIC: %s\n", msg.Topic())
 	fmt.Printf("MSG: %s\n", msg.Payload())
+
 }
 
 func init() {
@@ -73,4 +75,14 @@ func MqttSendDefault(msg string) {
 		wg.Done()
 	}()
 	wg.Wait()
+}
+
+//Translate 把接收到的信息转化为json
+func Translate(msgByte []byte) {
+	var dataFormat interface{}
+	err := json.Unmarshal(msgByte, &dataFormat)
+	if err != nil {
+		fmt.Println("转化json出错", err.Error())
+	}
+
 }
