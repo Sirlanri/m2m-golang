@@ -35,3 +35,20 @@ func TempRes(temp float64) bool {
 	}
 	return true
 }
+
+//HumiRes -SQL 写入湿度数据 float
+func HumiRes(humi float64) bool {
+	tx, _ := Db.Begin()
+	_, err := tx.Exec(`insert into humisensor (num)
+		values (?)`, humi)
+	if err != nil {
+		fmt.Println("湿度传感器，写入出错", err.Error())
+		return false
+	}
+	err = tx.Commit()
+	if err != nil {
+		fmt.Println("湿度传感器，commit出错", err.Error())
+		return false
+	}
+	return true
+}
