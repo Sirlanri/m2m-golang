@@ -20,5 +20,9 @@ func BodyRes(resflag int) {
 /*TempRes -serves 温度传感器
 传入温度值 float */
 func TempRes(temp float64) {
-
+	if temp < 100.0 && temp > -20.0 {
+		sqls.TempRes(temp)
+	} else {
+		fmt.Println("温度传感器，传入数据不合法")
+	}
 }
