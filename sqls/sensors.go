@@ -52,3 +52,20 @@ func HumiRes(humi float64) bool {
 	}
 	return true
 }
+
+//LightRes -SQL 光照传感器 写入光照数据
+func LightRes(light int64) bool {
+	tx, _ := Db.Begin()
+	_, err := tx.Exec(`insert into lightsensor (num)
+		values (?)`, light)
+	if err != nil {
+		fmt.Println("光照传感器，写入出错", err.Error())
+		return false
+	}
+	err = tx.Commit()
+	if err != nil {
+		fmt.Println("光照传感器，commit出错", err.Error())
+		return false
+	}
+	return true
+}

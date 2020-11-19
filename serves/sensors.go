@@ -35,3 +35,8 @@ func HumiRes(humi float64) {
 		fmt.Println("湿度传感器，传入数据不合法")
 	}
 }
+
+//LightRes -serves 光照传感器
+func LightRes(light int64) {
+
+}
