@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris/v12"
-	"ri-co.cn/m2m/handlers"
 )
 
 func main() {
@@ -14,7 +13,6 @@ func main() {
 	})
 
 	sensor := app.Party("/sensor", crs).AllowMethods(iris.MethodOptions)
-	sensor.Get("/body", handlers.BodyRes)
 
 	app.Run(iris.Addr(":8090"))
 

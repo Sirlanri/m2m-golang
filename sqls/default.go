@@ -7,7 +7,7 @@ import (
 	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
-	"ri-co.cn/m2m/serves"
+	"ri-co.cn/m2m/configs"
 )
 
 //Db 创建的唯一指针
@@ -20,7 +20,7 @@ func init() {
 
 //ConnectDB 初始化时，连接数据库
 func ConnectDB() *sql.DB {
-	database := serves.SQLConfg()
+	database := configs.SQLConfg()
 	Db, err := sql.Open("mysql", database)
 	if err != nil {
 		fmt.Println("数据库初始化链接失败", err.Error())
