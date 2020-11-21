@@ -21,6 +21,7 @@ func main() {
 	front.Get("/getTemp", handlers.GetTempTest)
 	front.Get("/getHumi", handlers.GetHumiTest)
 	front.Get("/getLight", handlers.GetLightTest)
+	front.Get("/getVoice", handlers.GetVoiceTest)
 
 	//传感器
 	sensor := m2m.Party("/sensor")

@@ -32,3 +32,12 @@ func GetLightTest(con iris.Context) {
 	}
 	con.JSON(data)
 }
+
+//GetVoiceTest 模拟接口 是否有声音
+func GetVoiceTest(con iris.Context) {
+	voice := rand.Intn(2)
+	data := map[string]int{
+		"voice": voice,
+	}
+	con.JSON(data)
+}
