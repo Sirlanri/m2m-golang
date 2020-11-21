@@ -24,7 +24,7 @@ func main() {
 
 	//传感器
 	sensor := m2m.Party("/sensor")
-	sensor.Get("/temp", handlers.SendTemp)
+	sensor.Post("/temp", handlers.SendTemp)
 
 	app.Run(iris.Addr(configs.PortConfig()))
 
