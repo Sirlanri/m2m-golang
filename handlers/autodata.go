@@ -21,3 +21,11 @@ func GetHumiTest(con iris.Context) {
 	}
 	con.JSON(data)
 }
+
+func GetLightTest(con iris.Context) {
+	light := rand.Int31n(1000)
+	data := map[string]int32{
+		"light": light,
+	}
+	con.JSON(data)
+}

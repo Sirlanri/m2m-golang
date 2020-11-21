@@ -19,6 +19,7 @@ func main() {
 
 	front.Get("/getTemp", handlers.GetTempTest)
 	front.Get("/getHumi", handlers.GetHumiTest)
+	front.Get("/getLight", handlers.GetLightTest)
 
 	app.Run(iris.Addr(":8090"))
 
