@@ -16,10 +16,13 @@ func main() {
 
 	//前端
 	front := m2m.Party("/front")
-
+	//前端获取实时数据
 	front.Get("/getTemp", handlers.GetTempTest)
 	front.Get("/getHumi", handlers.GetHumiTest)
 	front.Get("/getLight", handlers.GetLightTest)
+
+	//传感器
+	sensor := m2m.Party("/sensor")
 
 	app.Run(iris.Addr(":8090"))
 
