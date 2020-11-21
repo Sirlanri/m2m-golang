@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris/v12"
+	"ri-co.cn/m2m/configs"
 	"ri-co.cn/m2m/handlers"
 )
 
@@ -23,8 +24,9 @@ func main() {
 
 	//传感器
 	sensor := m2m.Party("/sensor")
+	sensor.Get("/temp", handlers.SendTemp)
 
-	app.Run(iris.Addr(":8090"))
+	app.Run(iris.Addr(configs.PortConfig()))
 
 	return
 }

@@ -15,3 +15,13 @@ func SQLConfg() string {
 	}
 	return serve
 }
+
+//PortConfig 端口信息
+func PortConfig() string {
+	if dev {
+		return ":8090"
+	} else {
+		//测试环境，暂定9100
+		return ":9100"
+	}
+}
