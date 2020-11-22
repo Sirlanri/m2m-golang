@@ -79,7 +79,7 @@ func GetAllHour() {
 	var currentDay = 0
 	var currentHour = 0
 	var times = 1
-	days := map[int]interface{}{}
+	days := map[int]map[int]int{}
 	daymap := make(map[int]int)
 	for rows1.Next() {
 		if daymap == nil {
@@ -109,9 +109,19 @@ func GetAllHour() {
 			currentDay = day
 		}
 	}
+	delete(days, 0)
+	convernJson(&days)
 
-	fmt.Println("")
+}
 
+func convernJson(res *map[int]map[int]int) {
+	//单个数据由单个列表、列表里有3个int
+	var singleData [][]int
+	for x := 0; x < 7; x++ {
+		for y := 0; y < 24; y++ {
+
+		}
+	}
 }
 
 func main() {
