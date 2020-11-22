@@ -77,23 +77,36 @@ func GetAllHour() {
 	}
 
 	var currentDay = 0
-	var hourIndex = 0
-	days := make(map[int](map[int]int))
+	var currentHour = 0
+	var times = 1
+	days := map[int]interface{}{}
+	daymap := make(map[int]int)
 	for rows1.Next() {
+		if daymap == nil {
+			daymap = make(map[int]int)
+		}
 		var day, hour int
 		err := rows1.Scan(&day, &hour)
 		if err != nil {
 			panic("写入数据出错" + err.Error())
 		}
 		if currentDay == day {
-			hourIndex++
+			if currentHour == hour {
+				times++
+			} else {
+				//hour变化，记录hour的值
+				daymap[currentHour] = times
+				//清除hour相关的标记
+				times = 1
+				currentHour = hour
+			}
 		} else {
-			hourIndex++
-			dayRow := make(map[int]int)
-			dayRow[hour] = hourIndex
-			days[currentDay] = dayRow
-
-			hourIndex = 0
+			//day变化，清除flag
+			days[currentDay] = daymap
+			daymap = nil
+			times = 1
+			currentHour = 0
+			currentDay = day
 		}
 	}
 
