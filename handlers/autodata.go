@@ -41,3 +41,21 @@ func GetVoiceTest(con iris.Context) {
 	}
 	con.JSON(data)
 }
+
+//GetWeekData 模拟接口，3D柱状图
+func GetWeekData(con iris.Context) {
+	var data [][]int
+	//单个数据由单个列表、列表里有3个int
+	for x := 0; x < 7; x++ {
+		for y := 0; y < 24; y++ {
+			randz := rand.Intn(20)
+			single := []int{x, y, randz}
+			data = append(data, single)
+		}
+	}
+	resData := map[string]([][]int){
+		"list": data,
+	}
+	con.JSON(resData)
+
+}
