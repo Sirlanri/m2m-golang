@@ -122,24 +122,56 @@ func GetAllHour() {
 	}
 	delete(days, 0)
 	data2 = data2[1:]
-	convert2(data2)
+	//convert2(data2)
 
 }
 
-func convert2(res []int) {
+//下面能跑了！
+func GetAllHour2() {
+	tx, _ := Db.Begin()
+	rows1, err := tx.Query(`SELECT day(itime), hour(itime)
+		FROM bodysensor WHERE itime>=DATE_SUB(now(),interval 7 day)
+		GROUP BY itime ORDER BY itime`)
+	if err != nil {
+		fmt.Println("查询出错", err.Error())
+		return
+	}
+
+	var total [][2]int
+
+	//首先把数据都保存到列表中
+	for rows1.Next() {
+		var single [2]int
+		err := rows1.Scan(&single[0], &single[1])
+		if err != nil {
+			fmt.Println("读取数据出错", err.Error())
+			return
+		}
+		total = append(total, single)
+	}
+	convert2(total)
+}
+
+//下面这个 能跑了！
+func convert2(res [][2]int) {
+	//确定日期范围
+	today := time.Now().Day()
 	var data [][]int
-	index := 0
-	for x := 0; x < 7; x++ {
+	for x := today - 7; x < today; x++ {
 		for y := 0; y < 24; y++ {
 			var block []int
-			if index >= len(res) {
-				block = []int{x, y, 0}
-			} else {
-				block = []int{x, y, res[index]}
+			var count int
+			for _, single := range res {
+				if single[0] == x && single[1] == y {
+					count++
+				} else {
+					if single[0] > x {
+						break
+					}
+				}
 			}
-
+			block = []int{x, y, count}
 			data = append(data, block)
-			index++
 		}
 	}
 	print()
@@ -155,6 +187,6 @@ func convernJson(res *map[int]map[int]int) {
 }
 
 func main() {
-	InsertDate()
+	GetAllHour2()
 
 }

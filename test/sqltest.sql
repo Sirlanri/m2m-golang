@@ -53,3 +53,12 @@ SELECT COUNT(*) FROM bodysensor
 SELECT round(AVG(num),2) FROM tempsensor 
 WHERE itime>=DATE_SUB(now(),interval 7 day)
 GROUP BY day(itime) ORDER BY day(itime);
+
+/*能跑了 获取近七天的每小时次数*/
+SELECT day(itime), hour(itime)
+FROM bodysensor WHERE itime>=DATE_SUB(now(),interval 7 day)
+GROUP BY itime ORDER BY itime;
+
+SELECT day(itime), hour(itime)
+		FROM bodysensor WHERE itime>=DATE_SUB(now(),interval 7 day)
+		GROUP BY itime ORDER BY itime;
