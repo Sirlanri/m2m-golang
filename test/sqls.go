@@ -81,6 +81,8 @@ func GetAllHour() {
 	var times = 1
 	days := map[int]map[int]int{}
 	daymap := make(map[int]int)
+	data2 := make([]int, 0, 169)
+	flagNext := true
 	for rows1.Next() {
 		if daymap == nil {
 			daymap = make(map[int]int)
@@ -96,12 +98,21 @@ func GetAllHour() {
 			} else {
 				//hour变化，记录hour的值
 				daymap[currentHour] = times
+				if flagNext {
+					data2 = append(data2, times)
+				} else {
+					data2 = append(data2, 0)
+					flagNext = true
+				}
+
 				//清除hour相关的标记
 				times = 1
 				currentHour = hour
 			}
 		} else {
-			//day变化，清除flag
+			if currentDay+1 != day {
+				flagNext = false
+			}
 			days[currentDay] = daymap
 			daymap = nil
 			times = 1
@@ -110,13 +121,32 @@ func GetAllHour() {
 		}
 	}
 	delete(days, 0)
-	convernJson(&days)
+	data2 = data2[1:]
+	convert2(data2)
 
+}
+
+func convert2(res []int) {
+	var data [][]int
+	index := 0
+	for x := 0; x < 7; x++ {
+		for y := 0; y < 24; y++ {
+			var block []int
+			if index >= len(res) {
+				block = []int{x, y, 0}
+			} else {
+				block = []int{x, y, res[index]}
+			}
+
+			data = append(data, block)
+			index++
+		}
+	}
+	print()
 }
 
 func convernJson(res *map[int]map[int]int) {
 	//单个数据由单个列表、列表里有3个int
-	var singleData [][]int
 	for x := 0; x < 7; x++ {
 		for y := 0; y < 24; y++ {
 
