@@ -114,3 +114,44 @@ func GetTimePer() (have, no int) {
 	}
 	return
 }
+
+//GetWeekTempHumi 获取一周中每天的温度&湿度平均值
+func GetWeekTempHumi() (data map[string][]float32) {
+	tx, _ := Db.Begin()
+	tempRows, err := tx.Query(`SELECT round(AVG(num),2) FROM tempsensor 
+		WHERE itime>=DATE_SUB(now(),interval 7 day)
+		GROUP BY day(itime) ORDER BY day(itime);`)
+	if err != nil {
+		fmt.Println("查询温度平均值错误", err.Error())
+	}
+	var temps []float32
+	for tempRows.Next() {
+		var temp float32
+		err = tempRows.Scan(&temp)
+		if err != nil {
+			fmt.Println("读取temp数据出错", err.Error())
+		}
+		temps = append(temps, temp)
+	}
+
+	humiRows, err := tx.Query(`SELECT round(AVG(num),2) FROM humisensor 
+		WHERE itime>=DATE_SUB(now(),interval 7 day)
+		GROUP BY day(itime) ORDER BY day(itime);`)
+	if err != nil {
+		fmt.Println("查询温度平均值错误", err.Error())
+	}
+	var humis []float32
+	for humiRows.Next() {
+		var humi float32
+		err = humiRows.Scan(&humi)
+		if err != nil {
+			fmt.Println("读取humi数据出错", err.Error())
+		}
+		humis = append(humis, humi)
+	}
+	data = map[string][]float32{
+		"temp": temps,
+		"humi": humis,
+	}
+	return
+}

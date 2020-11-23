@@ -48,3 +48,8 @@ SELECT COUNT(*) FROM bodysensor
     UNION 
 SELECT COUNT(*) FROM bodysensor
     WHERE itime>=DATE_SUB(now(),interval 1 day) AND status=0;
+
+/*计算一周每天温度的平均值*/
+SELECT round(AVG(num),2) FROM tempsensor 
+WHERE itime>=DATE_SUB(now(),interval 7 day)
+GROUP BY day(itime) ORDER BY day(itime);

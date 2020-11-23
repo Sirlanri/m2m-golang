@@ -24,6 +24,7 @@ func main() {
 	front.Get("/getVoice", handlers.GetVoiceTest)
 	front.Get("/getWeek", handlers.GetWeekData)
 	front.Get("/getTimePer", handlers.GetTimePer)
+	front.Get("/getWeekTempHumi", handlers.GetWeekTempHumi)
 
 	//传感器
 	sensor := m2m.Party("/sensor")

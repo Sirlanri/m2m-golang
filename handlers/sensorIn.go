@@ -38,3 +38,9 @@ func GetTimePer(con iris.Context) {
 	}
 	con.JSON(data)
 }
+
+//GetWeekTempHumi 获取一周温度湿度的平均值列表
+func GetWeekTempHumi(con iris.Context) {
+	data := sqls.GetWeekTempHumi()
+	con.JSON(data)
+}

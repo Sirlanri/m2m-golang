@@ -56,9 +56,9 @@ func GenerateDate() string {
 func InsertDate() {
 	tx, _ := Db.Begin()
 	for i := 0; i < 1000; i++ {
-		flag := rand.Intn(2)
+		flag := rand.Intn(100)
 		date := GenerateDate()
-		_, err := tx.Exec(`insert into bodysensor values(?,?)`, flag, date)
+		_, err := tx.Exec(`insert into humisensor values(?,?)`, flag, date)
 		if err != nil {
 			fmt.Println("插入出错", err.Error())
 		}
@@ -155,6 +155,6 @@ func convernJson(res *map[int]map[int]int) {
 }
 
 func main() {
-	GetAllHour()
+	InsertDate()
 
 }
