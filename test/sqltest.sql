@@ -41,3 +41,10 @@ GROUP BY itime ORDER BY itime;
 SELECT count(day(itime)), hour(itime)
 		FROM bodysensor WHERE itime>=DATE_SUB(now(),interval 7 day)
 		GROUP BY itime ORDER BY itime;
+
+/*当天 有人和没人的次数*/
+SELECT COUNT(*) FROM bodysensor
+    WHERE itime>=DATE_SUB(now(),interval 1 day) AND status=1 
+    UNION 
+SELECT COUNT(*) FROM bodysensor
+    WHERE itime>=DATE_SUB(now(),interval 1 day) AND status=0;

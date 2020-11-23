@@ -8,9 +8,11 @@ import (
 	"fmt"
 
 	"github.com/kataras/iris/v12"
+	"ri-co.cn/m2m/sqls"
 	"ri-co.cn/m2m/structs"
 )
 
+//SendTemp 接收传感器发来的信息
 func SendTemp(con iris.Context) {
 	var req structs.ReqData
 	err := con.ReadJSON(&req)
@@ -25,4 +27,14 @@ func SendTemp(con iris.Context) {
 		fmt.Println("返回数据出错", err.Error())
 	}
 
+}
+
+//GetTimePer 数据统计页面，获取有无人的统计次数
+func GetTimePer(con iris.Context) {
+	have, no := sqls.GetTimePer()
+	data := map[string]int{
+		"have": have,
+		"no":   no,
+	}
+	con.JSON(data)
 }

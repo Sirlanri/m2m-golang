@@ -86,3 +86,31 @@ func VoiceRes(voice float64) bool {
 	}
 	return true
 }
+
+//GetTimePer -SQL 获取有无人的次数
+func GetTimePer() (have, no int) {
+	tx, _ := Db.Begin()
+	rows, err := tx.Query(`SELECT COUNT(*) FROM bodysensor
+		WHERE itime>=DATE_SUB(now(),interval 1 day) AND status=1 
+		UNION 
+		SELECT COUNT(*) FROM bodysensor
+		WHERE itime>=DATE_SUB(now(),interval 1 day) AND status=0;`)
+	if err != nil {
+		fmt.Println("查询有无人出错", err.Error())
+		return 0, 0
+	}
+	flag := true
+	for rows.Next() {
+		if flag {
+			err = rows.Scan(&have)
+			flag = false
+		} else {
+			err = rows.Scan(&no)
+		}
+		if err != nil {
+			fmt.Println(err.Error())
+			panic("写入int出错")
+		}
+	}
+	return
+}
