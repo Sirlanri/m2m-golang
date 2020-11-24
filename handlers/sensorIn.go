@@ -6,6 +6,7 @@ package handlers
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/kataras/iris/v12"
 	"ri-co.cn/m2m/sqls"
@@ -21,11 +22,18 @@ func SendTemp(con iris.Context) {
 		return
 	}
 	var response = req
+
+	//写入当前时间
+	timenow := time.Now().Format("2006-01-02 15:04:05")
+	response.M2mcin.Lt = timenow
 	response.M2mcin.Con = "Rico: " + req.M2mcin.Con
 	_, err = con.JSON(response)
 	if err != nil {
 		fmt.Println("返回数据出错", err.Error())
 	}
+
+	//通过mqtt发送json
+	SendMqtt(response)
 
 }
 
