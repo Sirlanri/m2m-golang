@@ -15,8 +15,9 @@ var f mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 	fmt.Printf("消息内容: %s\n", msg.Payload())
 }
 
-//SendMqtt 通过mqtt发送消息
-func SendMqtt(payload interface{}) {
+var c mqtt.Client
+
+func init() {
 	mqtt.ERROR = log.New(os.Stdout, "", 0)
 	opts := mqtt.NewClientOptions().AddBroker("tcp://mqtt.ri-co.cn:1883").SetClientID("emqx_golang")
 
@@ -25,19 +26,25 @@ func SendMqtt(payload interface{}) {
 	opts.SetDefaultPublishHandler(f)
 	opts.SetPingTimeout(1 * time.Second)
 
-	c := mqtt.NewClient(opts)
+	c = mqtt.NewClient(opts)
 	if token := c.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
+}
+
+//SendMqtt 通过mqtt发送消息
+func SendMqtt(payload interface{}) {
 	data, err := json.Marshal(payload)
 	if err != nil {
 		fmt.Println("json打包出错", err.Error())
 	}
-	token := c.Publish("golang", 0, false, data)
-	err = token.Error()
-	if err != nil {
-		fmt.Println("mqtt出错", err.Error())
-	}
-	token.Wait()
+	go func() {
+		token := c.Publish("golang", 0, false, data)
+		err = token.Error()
+		if err != nil {
+			fmt.Println("mqtt出错", err.Error())
+		}
+		token.Wait()
+	}()
 
 }
