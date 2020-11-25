@@ -8,6 +8,7 @@ import (
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
+	uuid "github.com/satori/go.uuid"
 )
 
 var f mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
@@ -17,9 +18,18 @@ var f mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
 
 var c mqtt.Client
 
+//Createid 生成唯一名称
+func Createid() string {
+	// 创建 UUID v4
+	u1 := uuid.Must(uuid.NewV4(), nil)
+	id := u1.String()
+	return id[:9]
+}
+
 func init() {
 	mqtt.ERROR = log.New(os.Stdout, "", 0)
-	opts := mqtt.NewClientOptions().AddBroker("tcp://mqtt.ri-co.cn:1883").SetClientID("emqx_golang_local")
+
+	opts := mqtt.NewClientOptions().AddBroker("tcp://mqtt.ri-co.cn:1883").SetClientID("emqx_golang_" + Createid())
 
 	opts.SetKeepAlive(600 * time.Second)
 	// 设置消息回调处理函数
