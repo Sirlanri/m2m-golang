@@ -6,7 +6,6 @@ package handlers
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	"github.com/kataras/iris/v12"
@@ -49,10 +48,9 @@ func SendLight(con iris.Context) {
 	}
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
-	conint := strconv.Itoa(reqData.M2m.Con)
 	data := map[string]string{
 		"time":    timenow,
-		"RecData": conint,
+		"RecData": reqData.M2m.Con,
 	}
 	SendMqtt(data)
 	con.JSON(data)

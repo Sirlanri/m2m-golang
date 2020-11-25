@@ -32,10 +32,15 @@ type RequestInt struct {
 
 //RequestFloat 传感器传入子数据 float
 type RequestFloat struct {
-	Con int `json:"con"`
+	Con float32 `json:"con"`
+}
+
+//RequestSting 传感器传入子数据 float
+type RequestSting struct {
+	Con string `json:"con"`
 }
 
 //RequestData2 传感器传入的完整数据
 type RequestData2 struct {
-	M2m RequestInt `json:"m2m:cin"`
+	M2m RequestSting `json:"m2m:cin"`
 }
