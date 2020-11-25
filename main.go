@@ -9,6 +9,7 @@ import (
 
 func main() {
 	app := iris.New()
+	app.OnErrorCode(iris.StatusNotFound, handlers.NotFound)
 	crs := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, //允许通过的主机名称
 		AllowCredentials: true,
@@ -29,6 +30,7 @@ func main() {
 	//传感器
 	sensor := m2m.Party("/sensor")
 	sensor.Post("/temp", handlers.SendTemp)
+	sensor.Post("/light", handlers.SendLight)
 
 	app.Run(iris.Addr(configs.PortConfig()))
 

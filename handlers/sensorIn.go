@@ -6,6 +6,7 @@ package handlers
 
 import (
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/kataras/iris/v12"
@@ -35,6 +36,26 @@ func SendTemp(con iris.Context) {
 	//通过mqtt发送json
 	SendMqtt(response)
 
+}
+
+//SendLight 接收光照传感器 int
+func SendLight(con iris.Context) {
+	var reqData structs.RequestData2
+	err := con.ReadJSON(&reqData)
+	if err != nil {
+		fmt.Println("光照传感器，传入数据出错", err.Error())
+		con.StatusCode(402)
+		return
+	}
+	//当前时间
+	timenow := time.Now().Format("2006-01-02 15:04:05")
+	conint := strconv.Itoa(reqData.M2m.Con)
+	data := map[string]string{
+		"time":    timenow,
+		"RecData": conint,
+	}
+	SendMqtt(data)
+	con.JSON(data)
 }
 
 //GetTimePer 数据统计页面，获取有无人的统计次数

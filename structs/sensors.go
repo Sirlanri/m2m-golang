@@ -24,3 +24,18 @@ type ReqData struct {
 type Response struct {
 	M2mcin ReqDataIn `json:"m2m:cin"`
 }
+
+//RequestInt 传感器传入子数据 int
+type RequestInt struct {
+	Con int `json:"con"`
+}
+
+//RequestFloat 传感器传入子数据 float
+type RequestFloat struct {
+	Con int `json:"con"`
+}
+
+//RequestData2 传感器传入的完整数据
+type RequestData2 struct {
+	M2m RequestInt `json:"m2m:cin"`
+}
