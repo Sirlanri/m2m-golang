@@ -31,6 +31,8 @@ func main() {
 	sensor := m2m.Party("/sensor")
 	sensor.Post("/temp", handlers.SendTemp)
 	sensor.Post("/light", handlers.SendLight)
+	sensor.Post("/humi", handlers.SendHumi)
+	sensor.Post("/body", handlers.SendBody)
 
 	app.Run(iris.Addr(configs.PortConfig()))
 
