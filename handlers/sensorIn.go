@@ -43,7 +43,8 @@ func SendLight(con iris.Context) {
 	err := con.ReadJSON(&reqData)
 	if err != nil {
 		fmt.Println("光照传感器，传入数据出错", err.Error())
-		con.StatusCode(402)
+		SendMqttString("光照传感器接口，解析json失败\n" + err.Error())
+		con.StatusCode(iris.StatusBadRequest)
 		return
 	}
 	//当前时间
