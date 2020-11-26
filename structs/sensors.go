@@ -15,6 +15,11 @@ type ReqDataIn struct {
 	Con string `json:"con"` //内容正文！
 }
 
+//SensorData 发送给传感器Wifi的数据
+type SensorData struct {
+	M2m ReqDataIn `json:"m2m:cin"`
+}
+
 //ReqData 传感器传入数据大结构体
 type ReqData struct {
 	M2mcin ReqDataIn `json:"m2m:cin"`
