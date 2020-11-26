@@ -114,19 +114,18 @@ func GetWeekTempHumi(con iris.Context) {
 	con.JSON(data)
 }
 
-func ToWifi() {
+func GetToWifi(_ iris.Context) {
+	ToWifi()
+}
 
+//ToWifi 发送给wif模块的数据
+func ToWifi() {
 	//要发送的json数据
 	var sourceData structs.WifiPostData
-	sourceData.M2m.Con = "ON"
-	_, err := json.Marshal(sourceData)
-	if err != nil {
-		fmt.Println("发送wifi数据，json打包出错", err.Error())
-		return
-	}
-
+	sourceData.M2m.Con = "ON" //开灯
 	requestBody := new(bytes.Buffer)
-	posturl := "http://v9v46x6k.shenzhuo.vip:10810"
+	json.NewEncoder(requestBody).Encode(sourceData)
+	posturl := "http://v9v46x6k.shenzhuo.vip:10810/"
 	req, err := http.NewRequest("POST", posturl, requestBody)
 	if err != nil {
 		fmt.Println("初始化post出错", err.Error())

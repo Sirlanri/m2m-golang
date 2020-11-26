@@ -27,12 +27,15 @@ func main() {
 	front.Get("/getTimePer", handlers.GetTimePer)
 	front.Get("/getWeekTempHumi", handlers.GetWeekTempHumi)
 
-	//传感器
+	//接收传感器发来的内容
 	sensor := m2m.Party("/sensor")
 	sensor.Post("/temp", handlers.SendTemp)
 	sensor.Post("/light", handlers.SendLight)
 	sensor.Post("/humi", handlers.SendHumi)
 	sensor.Post("/body", handlers.SendBody)
+
+	//向传感器发送数据
+	sensor.Get("/toWifi", handlers.GetToWifi)
 
 	app.Run(iris.Addr(configs.PortConfig()))
 
