@@ -125,7 +125,7 @@ func ToWifi() {
 	sourceData.M2m.Con = "ON" //开灯
 	requestBody := new(bytes.Buffer)
 	json.NewEncoder(requestBody).Encode(sourceData)
-	posturl := "http://v9v46x6k.shenzhuo.vip:10810/"
+	posturl := "http://39.96.49.63:9100/m2m/sensor/light"
 	req, err := http.NewRequest("POST", posturl, requestBody)
 	if err != nil {
 		fmt.Println("初始化post出错", err.Error())
