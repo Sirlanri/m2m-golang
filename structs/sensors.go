@@ -44,3 +44,13 @@ type RequestSting struct {
 type RequestData2 struct {
 	M2m RequestSting `json:"m2m:cin"`
 }
+
+//WifiPost 传给wifi模块的子数据
+type WifiPost struct {
+	Con string `json:"con"`
+}
+
+//WifiPostData 传给wifi模块的数据
+type WifiPostData struct {
+	M2m WifiPost `json:"m2m:cin"`
+}
