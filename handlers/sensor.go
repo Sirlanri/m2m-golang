@@ -53,7 +53,7 @@ func SendLight(con iris.Context) {
 		return
 	}
 	//转换为float
-	num, _ := strconv.ParseFloat(reqData.M2m.Con, 32)
+	num, _ := strconv.ParseFloat(reqData.M2m.Con, 64)
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -156,9 +156,11 @@ func LightToWifi(ins string) {
 	}
 
 	req.Header.Set("content-type", "application/json")
-	req.Close = true
 	post := &http.Client{}
-	res, _ := post.Do(req)
+	res, err := post.Do(req)
+	if err != nil {
+		fmt.Println("发送出错", err.Error())
+	}
 
 	body, _ := ioutil.ReadAll(res.Body)
 
