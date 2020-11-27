@@ -44,7 +44,7 @@ func GenerateDate() string {
 	second := strconv.Itoa(rand.Intn(60))
 
 	timedate := strings.Join([]string{hour, minute, second}, ":")
-	day1 := rand.Intn(23)
+	day1 := rand.Intn(28)
 	if day1 == 0 {
 		day1++
 	}
@@ -55,10 +55,42 @@ func GenerateDate() string {
 
 func InsertDate() {
 	tx, _ := Db.Begin()
+
+	//湿度
 	for i := 0; i < 1000; i++ {
-		flag := rand.Intn(100)
+		flag := rand.Float64() * 100
 		date := GenerateDate()
 		_, err := tx.Exec(`insert into humisensor values(?,?)`, flag, date)
+		if err != nil {
+			fmt.Println("插入出错", err.Error())
+		}
+	}
+
+	//温度
+	for i := 0; i < 1000; i++ {
+		flag := rand.Float64() * 50
+		date := GenerateDate()
+		_, err := tx.Exec(`insert into tempsensor values(?,?)`, flag, date)
+		if err != nil {
+			fmt.Println("插入出错", err.Error())
+		}
+	}
+
+	//光
+	for i := 0; i < 1000; i++ {
+		flag := rand.Int63n(1024)
+		date := GenerateDate()
+		_, err := tx.Exec(`insert into lightsensor values(?,?)`, flag, date)
+		if err != nil {
+			fmt.Println("插入出错", err.Error())
+		}
+	}
+
+	//人体
+	for i := 0; i < 1000; i++ {
+		flag := rand.Intn(2)
+		date := GenerateDate()
+		_, err := tx.Exec(`insert into bodysensor values(?,?)`, flag, date)
 		if err != nil {
 			fmt.Println("插入出错", err.Error())
 		}
@@ -177,16 +209,7 @@ func convert2(res [][2]int) {
 	print()
 }
 
-func convernJson(res *map[int]map[int]int) {
-	//单个数据由单个列表、列表里有3个int
-	for x := 0; x < 7; x++ {
-		for y := 0; y < 24; y++ {
-
-		}
-	}
-}
-
 func main() {
-	GetAllHour2()
+	InsertDate()
 
 }

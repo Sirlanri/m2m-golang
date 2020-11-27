@@ -62,3 +62,9 @@ GROUP BY itime ORDER BY itime;
 SELECT day(itime), hour(itime)
 		FROM bodysensor WHERE itime>=DATE_SUB(now(),interval 7 day)
 		GROUP BY itime ORDER BY itime;
+
+DELETE from mym2m.tempsensor;
+DELETE FROM mym2m.humisensor;
+
+DELETE FROM mym2m.lightsensor;
+DELETE FROM mym2m.bodysensor;

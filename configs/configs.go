@@ -9,7 +9,7 @@ var dev = true
 //SQLConfg 数据库信息
 func SQLConfg() string {
 	var local = "root:123456@/mym2m"
-	var serve = ""
+	var serve = "m2m:123456@/mym2m"
 	if dev {
 		return local
 	}
