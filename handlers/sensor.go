@@ -149,15 +149,15 @@ func LightToWifi(ins string) {
 	requestBody := new(bytes.Buffer)
 	json.NewEncoder(requestBody).Encode(sourceData)
 	posturl := "http://v9v46x6k.shenzhuo.vip:10810"
-	req, err := http.NewRequest("POST", posturl, requestBody)
+	req2, err := http.NewRequest("POST", posturl, requestBody)
 	if err != nil {
 		fmt.Println("初始化post出错", err.Error())
 		return
 	}
 
-	req.Header.Set("content-type", "application/json")
+	req2.Header.Set("content-type", "application/json")
 	post := &http.Client{}
-	res, err := post.Do(req)
+	res, err := post.Do(req2)
 	if err != nil {
 		fmt.Println("发送出错", err.Error())
 	}
