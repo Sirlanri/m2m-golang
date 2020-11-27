@@ -146,9 +146,11 @@ func LightToWifi(ins string) {
 
 	go func() {
 		defer func() {
-			if err := recover(); err != nil {
-
+			err := recover()
+			if err != nil {
+				fmt.Println(err)
 			}
+
 		}()
 		//要发送的json数据
 		var sourceData structs.WifiPostData

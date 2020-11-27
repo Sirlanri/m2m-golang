@@ -70,8 +70,8 @@ func SetLight(num float32) {
 		SendMqttString("光照已写入数据库 " + fmt.Sprintf("%f", num))
 	}
 
-	//亮度<300 开灯
-	if num <= 100 {
+	//开灯
+	if num <= 300 {
 		LightToWifi("ON")
 	}
 	if num > 400 {
