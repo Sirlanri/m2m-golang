@@ -9,11 +9,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"strconv"
 	"time"
 
 	"net/http"
 
 	"github.com/kataras/iris/v12"
+	"ri-co.cn/m2m/serves"
 	"ri-co.cn/m2m/sqls"
 	"ri-co.cn/m2m/structs"
 )
@@ -28,6 +30,9 @@ func SendTemp(con iris.Context) {
 		con.StatusCode(iris.StatusBadRequest)
 		return
 	}
+	//温度写入data
+	temp, _ := strconv.ParseFloat(reqData.M2m.Con, 32)
+	serves.SetTemp(float32(temp))
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
