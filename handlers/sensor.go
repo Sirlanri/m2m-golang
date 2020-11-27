@@ -54,7 +54,6 @@ func SendLight(con iris.Context) {
 	}
 	//转换为float
 	num, _ := strconv.ParseFloat(reqData.M2m.Con, 32)
-	SetLight(float32(num))
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -63,6 +62,7 @@ func SendLight(con iris.Context) {
 	}
 	SendMqtt(data)
 	con.JSON(data)
+	SetLight(float32(num))
 }
 
 //SendHumi 接收湿度数据
@@ -99,7 +99,6 @@ func SendBody(con iris.Context) {
 		return
 	}
 	num, _ := strconv.Atoi(reqData.M2m.Con)
-	SetBody(num)
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -108,6 +107,7 @@ func SendBody(con iris.Context) {
 	}
 	SendMqtt(data)
 	con.JSON(data)
+	SetBody(num)
 }
 
 //GetTimePer 数据统计页面，获取有无人的统计次数
