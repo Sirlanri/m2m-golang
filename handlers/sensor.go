@@ -15,7 +15,6 @@ import (
 	"net/http"
 
 	"github.com/kataras/iris/v12"
-	"ri-co.cn/m2m/serves"
 	"ri-co.cn/m2m/sqls"
 	"ri-co.cn/m2m/structs"
 )
@@ -32,7 +31,7 @@ func SendTemp(con iris.Context) {
 	}
 	//温度写入data
 	temp, _ := strconv.ParseFloat(reqData.M2m.Con, 32)
-	serves.SetTemp(float32(temp))
+	SetTemp(float32(temp))
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -151,4 +150,16 @@ func LightToWifi(ins string) {
 	SendMqttString(string(body))
 
 	defer res.Body.Close()
+}
+
+//以下为前端API
+
+//GetTemp 获取当前温度
+func GetTemp(con iris.Context) {
+	temp := fmt.Sprintf("%.2f", Temp)
+	data := map[string]string{
+		"temp": temp,
+	}
+	con.JSON(data)
+
 }

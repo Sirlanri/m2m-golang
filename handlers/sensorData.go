@@ -1,9 +1,8 @@
-package serves
+package handlers
 
 import (
 	"fmt"
 
-	"ri-co.cn/m2m/handlers"
 	"ri-co.cn/m2m/sqls"
 )
 
@@ -24,13 +23,13 @@ func SetTemp(num float32) {
 	Temp = num
 	tempindex++
 	fmt.Println("温度数据已更新", num)
-	handlers.SendMqttString("温度数据已更新 " + fmt.Sprintf("%f", num))
+	SendMqttString("温度数据已更新 " + fmt.Sprintf("%f", num))
 
 	//测试环境，暂定2次写入数据库
 	if tempindex == 1 {
 		sqls.TempRes(num)
 		tempindex = 0
 		fmt.Println("温度已写入数据库", num)
-		handlers.SendMqttString("温度已写入数据库 " + fmt.Sprintf("%f", num))
+		SendMqttString("温度已写入数据库 " + fmt.Sprintf("%f", num))
 	}
 }

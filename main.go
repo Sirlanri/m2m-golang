@@ -19,7 +19,7 @@ func main() {
 	//前端
 	front := m2m.Party("/front")
 	//前端获取实时数据
-	front.Get("/getTemp", handlers.GetTempTest)
+	front.Get("/getTemp", handlers.GetTemp)
 	front.Get("/getHumi", handlers.GetHumiTest)
 	front.Get("/getLight", handlers.GetLightTest)
 	front.Get("/getVoice", handlers.GetVoiceTest)
