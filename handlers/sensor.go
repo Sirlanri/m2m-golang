@@ -126,9 +126,14 @@ func GetWeekTempHumi(con iris.Context) {
 	con.JSON(data)
 }
 
-//GetToWifi 使用get手动操作测试开关灯
-func GetToWifi(_ iris.Context) {
+//Lighton 使用get手动操作测试开关灯
+func Lighton(_ iris.Context) {
 	LightToWifi("ON")
+}
+
+//Lightoff 使用get手动操作测试开关灯
+func Lightoff(_ iris.Context) {
+	LightToWifi("OFF")
 }
 
 //LightToWifi 发送给wif模块的指令，ON||OFF

@@ -35,7 +35,8 @@ func main() {
 	sensor.Post("/body", handlers.SendBody)
 
 	//向传感器发送数据
-	sensor.Get("/toWifi", handlers.GetToWifi)
+	sensor.Get("/lighton", handlers.Lighton)
+	sensor.Get("/lightoff", handlers.Lightoff)
 
 	app.Run(iris.Addr(configs.PortConfig()))
 
