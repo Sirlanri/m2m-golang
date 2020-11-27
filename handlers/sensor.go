@@ -52,6 +52,9 @@ func SendLight(con iris.Context) {
 		con.StatusCode(iris.StatusBadRequest)
 		return
 	}
+	//转换为int
+	num, _ := strconv.Atoi(reqData.M2m.Con)
+	SetLight(num)
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -72,6 +75,9 @@ func SendHumi(con iris.Context) {
 		con.StatusCode(iris.StatusBadRequest)
 		return
 	}
+	//写入data
+	humi, _ := strconv.ParseFloat(reqData.M2m.Con, 32)
+	SetHumi(float32(humi))
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -92,6 +98,8 @@ func SendBody(con iris.Context) {
 		con.StatusCode(iris.StatusBadRequest)
 		return
 	}
+	num, _ := strconv.Atoi(reqData.M2m.Con)
+	SetBody(num)
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -161,5 +169,31 @@ func GetTemp(con iris.Context) {
 		"temp": temp,
 	}
 	con.JSON(data)
+}
 
+//GetHumi 获取当前湿度
+func GetHumi(con iris.Context) {
+	humi := fmt.Sprintf("%.2f", Humi)
+	data := map[string]string{
+		"humi": humi,
+	}
+	con.JSON(data)
+}
+
+//GetLight 获取当前光强
+func GetLight(con iris.Context) {
+	light := Light
+	data := map[string]int{
+		"light": light,
+	}
+	con.JSON(data)
+}
+
+//GetBody 获取当前湿度
+func GetBody(con iris.Context) {
+	body := Body
+	data := map[string]int{
+		"body": body,
+	}
+	con.JSON(data)
 }
