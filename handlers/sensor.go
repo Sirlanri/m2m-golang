@@ -52,9 +52,9 @@ func SendLight(con iris.Context) {
 		con.StatusCode(iris.StatusBadRequest)
 		return
 	}
-	//转换为int
-	num, _ := strconv.Atoi(reqData.M2m.Con)
-	SetLight(num)
+	//转换为float
+	num, _ := strconv.ParseFloat(reqData.M2m.Con, 32)
+	SetLight(float32(num))
 	//当前时间
 	timenow := time.Now().Format("2006-01-02 15:04:05")
 	data := map[string]string{
@@ -183,7 +183,7 @@ func GetHumi(con iris.Context) {
 //GetLight 获取当前光强
 func GetLight(con iris.Context) {
 	light := Light
-	data := map[string]int{
+	data := map[string]float32{
 		"light": light,
 	}
 	con.JSON(data)

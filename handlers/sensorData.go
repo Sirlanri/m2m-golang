@@ -11,7 +11,7 @@ var (
 	Humi  float32
 	Temp  float32
 	Body  int
-	Light int
+	Light float32
 
 	humiindex  int
 	tempindex  int
@@ -54,18 +54,18 @@ func SetHumi(num float32) {
 }
 
 //SetLight 更改光照/写入数据库
-func SetLight(num int) {
+func SetLight(num float32) {
 	Light = num
 	lightindex++
 	fmt.Println("光照数据已更新", num)
-	SendMqttString("光照数据已更新 " + strconv.Itoa(num))
+	SendMqttString("光照数据已更新 " + fmt.Sprintf("%f", num))
 
 	//测试环境，暂定index次写入数据库
 	if lightindex == index {
-		sqls.LightRes(int64(num))
+		sqls.LightRes(num)
 		lightindex = 0
 		fmt.Println("光照已写入数据库", num)
-		SendMqttString("光照已写入数据库 " + strconv.Itoa(num))
+		SendMqttString("光照已写入数据库 " + fmt.Sprintf("%f", num))
 	}
 }
 

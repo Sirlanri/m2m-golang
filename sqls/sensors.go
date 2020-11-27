@@ -54,7 +54,7 @@ func HumiRes(humi float32) bool {
 }
 
 //LightRes -SQL 光照传感器 写入光照数据
-func LightRes(light int64) bool {
+func LightRes(light float32) bool {
 	tx, _ := Db.Begin()
 	_, err := tx.Exec(`insert into lightsensor (num)
 		values (?)`, light)
