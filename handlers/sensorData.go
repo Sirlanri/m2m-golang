@@ -74,7 +74,7 @@ func SetLight(num float32) {
 	if num <= 100 {
 		LightToWifi("ON")
 	}
-	if num > 1000 {
+	if num > 700 {
 		LightToWifi("OFF")
 	}
 }
