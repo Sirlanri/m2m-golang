@@ -69,6 +69,13 @@ func SetLight(num float32) {
 		fmt.Println("光照已写入数据库", num)
 		SendMqttString("光照已写入数据库 " + fmt.Sprintf("%f", num))
 	}
+
+	//亮度<300 开灯
+	if num <= 300 {
+		LightToWifi("ON")
+	} else {
+		LightToWifi("OFF")
+	}
 }
 
 //SetBody 更改人体/写入数据库
