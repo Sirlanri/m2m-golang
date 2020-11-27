@@ -74,7 +74,7 @@ func SetLight(num float32) {
 	if num <= 100 {
 		LightToWifi("ON")
 	}
-	if num > 500 {
+	if num > 400 {
 		LightToWifi("OFF")
 	}
 }
@@ -102,7 +102,7 @@ func SetBody(num int) {
 	}
 
 	if bodyTimes == 3 {
-		LightToWifi("xiang")
+		//LightToWifi("xiang")
 		bodyTimes = 0
 	}
 
