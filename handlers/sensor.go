@@ -150,14 +150,11 @@ func LightToWifi(ins string) {
 		return
 	}
 
-	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("content-type", "application/json")
 	req.Close = true
 	post := &http.Client{}
-	res, err := post.Do(req)
-	if err != nil {
-		fmt.Println("发送数据出错", err.Error())
-		panic(err)
-	}
+	res, _ := post.Do(req)
+
 	body, _ := ioutil.ReadAll(res.Body)
 
 	SendMqttString(string(body))
