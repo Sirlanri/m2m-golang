@@ -143,6 +143,11 @@ func Buzzon(_ iris.Context) {
 
 //LightToWifi 发送给wif模块的指令，ON||OFF
 func LightToWifi(ins string) {
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("传输出错，无视")
+		}
+	}()
 	//要发送的json数据
 	var sourceData structs.WifiPostData
 	sourceData.M2m.Con = ins //开灯
