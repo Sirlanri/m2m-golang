@@ -143,35 +143,39 @@ func Buzzon(_ iris.Context) {
 
 //LightToWifi 发送给wif模块的指令，ON||OFF
 func LightToWifi(ins string) {
-	defer func() {
-		if err := recover(); err != nil {
-			fmt.Println("传输出错，无视")
+
+	go func() {
+		defer func() {
+			if err := recover(); err != nil {
+
+			}
+		}()
+		//要发送的json数据
+		var sourceData structs.WifiPostData
+		sourceData.M2m.Con = ins //开灯
+		requestBody := new(bytes.Buffer)
+		json.NewEncoder(requestBody).Encode(sourceData)
+		posturl := "http://v9v46x6k.shenzhuo.vip:10810"
+		req2, err := http.NewRequest("POST", posturl, requestBody)
+		if err != nil {
+			fmt.Println("初始化post出错", err.Error())
+			return
 		}
+
+		req2.Header.Set("content-type", "application/json")
+		post := &http.Client{}
+		res, err := post.Do(req2)
+		if err != nil {
+			fmt.Println("发送出错", err.Error())
+		}
+
+		body, _ := ioutil.ReadAll(res.Body)
+
+		SendMqttString(string(body))
+
+		res.Body.Close()
 	}()
-	//要发送的json数据
-	var sourceData structs.WifiPostData
-	sourceData.M2m.Con = ins //开灯
-	requestBody := new(bytes.Buffer)
-	json.NewEncoder(requestBody).Encode(sourceData)
-	posturl := "http://v9v46x6k.shenzhuo.vip:10810"
-	req2, err := http.NewRequest("POST", posturl, requestBody)
-	if err != nil {
-		fmt.Println("初始化post出错", err.Error())
-		return
-	}
 
-	req2.Header.Set("content-type", "application/json")
-	post := &http.Client{}
-	res, err := post.Do(req2)
-	if err != nil {
-		fmt.Println("发送出错", err.Error())
-	}
-
-	body, _ := ioutil.ReadAll(res.Body)
-
-	SendMqttString(string(body))
-
-	defer res.Body.Close()
 }
 
 //以下为前端API
