@@ -136,6 +136,11 @@ func Lightoff(_ iris.Context) {
 	LightToWifi("OFF")
 }
 
+//Buzzon 开启蜂鸣器
+func Buzzon(_ iris.Context) {
+	LightToWifi("xiang")
+}
+
 //LightToWifi 发送给wif模块的指令，ON||OFF
 func LightToWifi(ins string) {
 	//要发送的json数据

@@ -37,6 +37,7 @@ func main() {
 	//向传感器发送数据
 	sensor.Get("/lighton", handlers.Lighton)
 	sensor.Get("/lightoff", handlers.Lightoff)
+	sensor.Get("/buzzon", handlers.Buzzon)
 
 	app.Run(iris.Addr(configs.PortConfig()))
 
