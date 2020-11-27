@@ -18,6 +18,8 @@ var (
 	bodyindex  int
 	lightindex int
 
+	bodyTimes int
+
 	index = 2
 )
 
@@ -83,4 +85,17 @@ func SetBody(num int) {
 		fmt.Println("人体已写入数据库", num)
 		SendMqttString("人体已写入数据库 " + strconv.Itoa(num))
 	}
+
+	//达到一定次数，蜂鸣器响
+	if num == 1 {
+		bodyTimes++
+	} else {
+		bodyTimes = 0
+	}
+
+	if bodyTimes == 3 {
+		LightToWifi("xiang")
+		bodyTimes = 0
+	}
+
 }
