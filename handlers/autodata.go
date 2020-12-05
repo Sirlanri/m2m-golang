@@ -26,7 +26,7 @@ func GetHumiTest(con iris.Context) {
 
 //GetLightTest 模拟接口 光照
 func GetLightTest(con iris.Context) {
-	light := rand.Int31n(100)
+	light := rand.Int31n(1000)
 	data := map[string]int32{
 		"light": light,
 	}
