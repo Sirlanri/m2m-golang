@@ -39,7 +39,7 @@ func ConnectDB() *sql.DB {
 //创建日期的假数据
 func GenerateDate() string {
 	rand.NewSource(time.Now().Unix())
-	hour := strconv.Itoa(rand.Intn(24))
+	hour := strconv.Itoa(rand.Intn(11))
 	minute := strconv.Itoa(rand.Intn(60))
 	second := strconv.Itoa(rand.Intn(60))
 
@@ -49,7 +49,7 @@ func GenerateDate() string {
 		day1++
 	}
 	day := strconv.Itoa(day1)
-	daydate := "2020-11-" + day + " " + timedate
+	daydate := "2020-12-" + day + " " + timedate
 	return daydate
 }
 
